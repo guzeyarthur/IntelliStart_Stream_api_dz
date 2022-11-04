@@ -1,8 +1,7 @@
 package util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,22 +34,8 @@ public class StreamTool {
     }
 
     public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) { // TASK #5
-        final Iterator<T> firstIterator = first.iterator();
-        final Iterator<T> secondIterator = second.iterator();
-        final List<T> storage = new ArrayList<>();
-        while (firstIterator.hasNext() || secondIterator.hasNext()) {
-            final T fEl = firstIterator.next();
-            storage.add(fEl);
-            if (!firstIterator.hasNext()) {
-                break;
-            }
-
-            final T sEl = secondIterator.next();
-            storage.add(sEl);
-            if (!secondIterator.hasNext()) {
-                break;
-            }
-        }
-        return storage.stream();
+        List<T> result = Stream.concat(first,second).collect(Collectors.toList());
+        Collections.shuffle(result);
+        return result.stream();
     }
 }
